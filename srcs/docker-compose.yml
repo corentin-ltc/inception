@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  mariadb:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - SQL_DATABASE=${SQL_DATABASE}
+      - SQL_USER=${SQL_USER}
+      - SQL_PASSWORD=${SQL_PASSWORD}
+    ports:
+      - "3306:3306"
