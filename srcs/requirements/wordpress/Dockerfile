@@ -11,10 +11,14 @@ RUN apt-get install -y php-mysql
 RUN apt-get install -y mariadb-client
 
 
-RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
-RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
-RUN	chown -R root:root /var/www/wordpress
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+#FPM
+COPY www.conf /etc/php/7.3/fpm/pool.d
+RUN service php7.3-fpm start
+RUN sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' /etc/php/7.3/fpm/php.ini
+
+#WP-CLI
+WORKDIR /var/www/html
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 

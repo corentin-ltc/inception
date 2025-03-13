@@ -4,6 +4,8 @@ if [ ! -e /var/www/html/index.php ]
 then	
 	wp core download --allow-root
 
+	chown -R www-data:www-data /var/www/html/*
+	chmod -R 755 /var/www/html/*
 
 	#CREATE SITE + USERS
 	wp core install --url=https://cle-tort.42.fr --title=$WEBSITE_NAME --admin_user=$ADMIN_NAME --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root
