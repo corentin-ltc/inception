@@ -1,15 +1,15 @@
 FROM debian:bullseye
 
 RUN apt update && apt upgrade -y
+RUN apt install vim -y
+RUN apt install curl -y
+RUN apt-get -y install wget
 
-RUN apt-get update
-RUN apt install curl wget systemd ssh -y
-RUN apt install php7.3 php7.3-fpm php7.3-mysql php7.3-common php7.3-cli -y
+RUN apt-get install -y php
+RUN apt-get install -y php-fpm
+RUN apt-get install -y php-mysql
+RUN apt-get install -y mariadb-client
 
-#FPM
-COPY conf/www.conf /etc/php/7.3/fpm/pool.d
-RUN service php7.3-fpm start
-RUN sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' /etc/php/7.3/fpm/php.ini
 
 #WP-CLI
 WORKDIR /var/www/html
