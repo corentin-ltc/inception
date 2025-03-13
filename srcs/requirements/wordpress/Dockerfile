@@ -23,4 +23,4 @@ EXPOSE 9000
 # RUN chmod 777 var/auto_config.sh
 
 #ENTRYPOINT ["/var/auto_config.sh"]
-CMD ["php-fpm7.3", "-F"]
+#CMD ["php-fpm7.3", "-F"]
