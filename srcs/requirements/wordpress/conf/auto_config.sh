@@ -1,3 +1,5 @@
+# #!/bin/sh
+
 sleep 10
 
 wp config create	--allow-root \
@@ -6,7 +8,6 @@ wp config create	--allow-root \
 					--dbpass=$SQL_PASSWORD \
 					--dbhost=mariadb:3306 --path='/var/www/wordpress'
 
-# #!/bin/sh
 
 # if [ ! -e /var/www/html/index.php ]
 # then	
