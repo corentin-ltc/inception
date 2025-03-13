@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sleep 10
 
 wp config create	--allow-root \
