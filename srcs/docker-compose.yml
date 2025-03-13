@@ -6,7 +6,7 @@ services:
      - "443:443"
     volumes:
      - wordpress:/var/www/html
-#     - wordpress:/home/cle-tort/data
+#     - wordpress:/home/vboxuser/data
     restart: unless-stopped
     networks:
      - inception_network
@@ -18,7 +18,7 @@ services:
     build: ./requirements/wordpress
     volumes:
      - wordpress:/var/www/html
-#     - wordpress:/home/cle-tort/data
+#     - wordpress:/home/vboxuser/data
     restart: unless-stopped
     environment:
      - ADMIN_NAME=${ADMIN_NAME}
@@ -64,10 +64,10 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/cle-tort/data/wordpress'
+      device: '/home/vboxuser/data/wordpress'
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/cle-tort/data/mariadb'
+      device: '/home/vboxuser/data/mariadb'
