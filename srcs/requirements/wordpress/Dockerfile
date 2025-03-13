@@ -12,7 +12,7 @@ RUN apt-get install -y mariadb-client
 
 
 #FPM
-COPY www.conf /etc/php/7.3/fpm/pool.d
+COPY conf/www.conf /etc/php/7.3/fpm/pool.d
 RUN service php7.3-fpm start
 RUN sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' /etc/php/7.3/fpm/php.ini
 
