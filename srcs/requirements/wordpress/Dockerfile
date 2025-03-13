@@ -19,7 +19,8 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
 EXPOSE 9000
-COPY auto_config.sh /var
+COPY conf/auto_config.sh /var
+RUN chown var/auto_config.sh
 
 ENTRYPOINT ["/var/auto_config.sh"]
 CMD ["php-fpm7.3", "-F"]
