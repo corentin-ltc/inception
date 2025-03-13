@@ -45,11 +45,11 @@ services:
     restart: on-failure
     expose:
       - "9000"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000"]
-      interval: 10s
-      retries: 5
-      start_period: 5s
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:9000"]
+    #   interval: 10s
+    #   retries: 5
+    #   start_period: 5s
 
 networks:
   inception:
