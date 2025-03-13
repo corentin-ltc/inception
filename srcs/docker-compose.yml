@@ -19,6 +19,8 @@ services:
       - wordpress:/var/www/wordpress
     networks:
       - inception
+    depends_on:
+      - wordpress
     build: 
       context: requirements/nginx
       dockerfile: Dockerfile
@@ -26,9 +28,6 @@ services:
     ports:
       - "8443:443"
     restart: on-failure
-    depends_on:
-      wordpress:
-        condition: service_healthy
 
   wordpress:
     container_name: wordpress
@@ -45,11 +44,6 @@ services:
     restart: on-failure
     expose:
       - "9000"
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:9000"]
-    #   interval: 10s
-    #   retries: 5
-    #   start_period: 5s
 
 networks:
   inception:

@@ -17,3 +17,9 @@ RUN	chown -R root:root /var/www/wordpress
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
+
+EXPOSE 9000
+COPY auto_config.sh /var
+
+ENTRYPOINT ["/var/auto_config.sh"]
+CMD ["php-fpm7.3", "-F"]
