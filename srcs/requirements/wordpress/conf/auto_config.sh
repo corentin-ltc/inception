@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sleep infinity
+
 # Check if WordPress is already installed
 if [ ! -e /var/www/wordpress/index.php ]
 then
