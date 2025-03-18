@@ -1,6 +1,8 @@
 [mysqld]
-datadir = /var/lib/mysql
-socket  = /run/mysqld/mysqld.sock
-bind_address=*
-port = 3306
-user = mysql
+basedir       = /usr
+tmpdir        = /tmp
+pid-file      = /run/mysqld/mysqld.pid
+datadir       = /var/lib/mysql
+bind-address  = mariadb
+port          = 3306
+user          = root

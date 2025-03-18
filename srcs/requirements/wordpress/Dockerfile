@@ -1,28 +1,32 @@
 FROM debian:bullseye
 
-RUN apt update && apt upgrade -y
-RUN apt install vim -y
-RUN apt install curl -y
-RUN apt-get -y install wget
+RUN apt-get update && apt-get -y install \
+    curl \
+    wget \
+    php \
+    php-cli \
+    php-fpm \
+    php-mysqli \
+    mariadb-client \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install -y php
-RUN apt-get install -y php-fpm
-RUN apt-get install -y php-mysql
-RUN apt-get install -y mariadb-client
-
-
-RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
-RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
-RUN	chown -R root:root /var/www/wordpress
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
-EXPOSE 9000
-COPY conf/auto_config.sh /var
-RUN chmod 777 var/auto_config.sh
-RUN mkdir var/run/php
-RUN service apache2 start
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 
-ENTRYPOINT ["/var/auto_config.sh", "php-fpm7.4", "-F"]
-#CMD ["php-fpm7.3", "-F"]
+RUN mkdir /run/php
+
+COPY ./tools/auto_config.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/auto_config.sh
+
+EXPOSE 9000
+
+WORKDIR /var/www/html/
+
+ENTRYPOINT [ "/usr/local/bin/auto_config.sh" ]
+
+
+
+

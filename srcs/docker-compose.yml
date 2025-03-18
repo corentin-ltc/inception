@@ -1,54 +1,62 @@
 services:
-  mariadb:
-    container_name: mariadb
-    networks:
-      - inception
-    build: 
-      context: requirements/mariadb
-      dockerfile: Dockerfile
-    env_file: .env
-    volumes:
-      - mariadb:/var/lib/mysql
-    restart: unless-stopped
-    expose:
-      - "3306"
-
   nginx:
-    container_name: nginx
-    volumes:
-      - wordpress:/var/www/wordpress
-    networks:
-      - inception
-    depends_on:
-      - wordpress
-    build: 
-      context: requirements/nginx
-      dockerfile: Dockerfile
-    env_file: .env
-    ports:
-      - "8443:443"
-    restart: on-failure
-
+        container_name: nginx
+        build: ./requirements/nginx/.
+        image: nginx
+        ports:
+           - "443:443"
+        depends_on:
+           - wordpress
+        volumes:
+           - wordpress:/var/www/html
+        restart: always
+        networks:
+           - network
+        env_file: .env
+  mariadb:
+        container_name: mariadb
+        build:
+            context: ./requirements/mariadb/.
+        image: mariadb
+        volumes:
+            - mariadb:/var/lib/mysqlx
+        networks:
+            - network
+        restart: always
+        env_file: .env
+        expose:
+            - "3306"
   wordpress:
-    container_name: wordpress
-    env_file: .env
-    volumes:
-      - wordpress:/var/www/wordpress
-    networks:
-      - inception
-    build: 
-      context: requirements/wordpress
-      dockerfile: Dockerfile
-    depends_on:
-      - mariadb
-    restart: on-failure
-    expose:
-      - "9000"
+          container_name: wordpress
+          build: ./requirements/wordpress/.
+          image: wordpress
+          depends_on:
+            - mariadb
+          volumes:
+            - wordpress:/var/www/html
+            - /home/cle-tort/data/wordpress:/var/www/html
+          networks:
+            - network
+          restart: always
+          env_file: .env
+          expose:
+            - "9000"
+volumes:
+    mariadb:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/cle-tort/data/mysql
+            o: bind
+
+    wordpress:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/cle-tort/data/wordpress
+            o: bind
 
 networks:
-  inception:
+  network:
+    name: network
     driver: bridge
-
-volumes: 
-  mariadb:
-  wordpress:

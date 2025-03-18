@@ -1,20 +1,16 @@
-DOCKER_COMPOSE = srcs/docker-compose.yml
-
-all: up
-
-up:
-	docker-compose -f $(DOCKER_COMPOSE) up --build
+all:
+	@docker compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
-	docker-compose -f $(DOCKER_COMPOSE) down
+	@docker compose -f ./srcs/docker-compose.yml down
 
-fclean:
-	docker container prune -f
-	docker system prune -af
-	docker volume rm -f srcs_mariadb
-	docker volume rm -f srcs_wordpress
-	@docker volume rm $(docker volume ls -q --filter dangling=true) 2>/dev/null || true
+clean:
+	@rm -rf /home/cle-tort/data/mysql/*
+	@rm -rf /home/cle-tort/data/wordpress/*
+	@docker stop $$(docker ps -qa)
+	@docker rm $$(docker ps -qa)
+	@docker rmi $$(docker images -qa)
+	@docker volume rm $$(docker volume ls -q)
+	@docker network rm network
 
-re: fclean all
-
-.PHONY: all up down fclean re
+.PHONY: all down clean
