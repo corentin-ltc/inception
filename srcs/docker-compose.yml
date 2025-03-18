@@ -19,7 +19,7 @@ services:
             context: ./requirements/mariadb/.
         image: mariadb
         volumes:
-            - mariadb:/var/lib/mysqlx
+            - mariadb:/var/lib/mysql
         networks:
             - network
         restart: always
