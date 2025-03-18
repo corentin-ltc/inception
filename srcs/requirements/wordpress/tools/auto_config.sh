@@ -26,9 +26,5 @@ THEME_NAME="twentytwentyone"
 echo "Installation du thème $THEME_NAME..."
 wp theme install $THEME_NAME --activate --path=/var/www/html --allow-root
 
-echo "Installation et configuration terminées."
-wp option get siteurl --path=/var/www/html --allow-root
-wp user list --path=/var/www/html --allow-root
-
 php-fpm7.4 -F
 
