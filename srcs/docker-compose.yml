@@ -11,7 +11,7 @@ services:
            - wordpress:/var/www/html
         restart: always
         networks:
-           - network
+           - inception
         env_file: .env
   mariadb:
         container_name: mariadb
@@ -21,7 +21,7 @@ services:
         volumes:
             - mariadb:/var/lib/mysql
         networks:
-            - network
+            - inception
         restart: always
         env_file: .env
         expose:
@@ -35,7 +35,7 @@ services:
           volumes:
             - wordpress:/var/www/html
           networks:
-            - network
+            - inception
           restart: always
           env_file: .env
           expose:
@@ -56,6 +56,6 @@ volumes:
             o: bind
 
 networks:
-  network:
-    name: network
+  inception:
+    name: inception
     driver: bridge
