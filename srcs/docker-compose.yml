@@ -34,7 +34,6 @@ services:
             - mariadb
           volumes:
             - wordpress:/var/www/html
-            - /home/cle-tort/data/wordpress:/var/www/html
           networks:
             - network
           restart: always
